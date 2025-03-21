@@ -1,0 +1,21 @@
+[project]
+name = "notebooks"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "aiohttp>=3.11.14",
+    "cartopy>=0.24.1",
+    "matplotlib>=3.10.1",
+    "pandas>=2.2.3",
+    "requests>=2.32.3",
+    "s3fs>=2025.3.0",
+    "xarray[complete]>=2025.3.0",
+    "zarr>=3.0.6",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.29.5",
+]
