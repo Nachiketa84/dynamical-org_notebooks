@@ -39,10 +39,10 @@ addr_infos = socket.getaddrinfo(
 if len(addr_infos) > 0:
     ip_addresses = [str(addr_info[-1][0]) for addr_info in addr_infos]
     logger.info(
-        f"Found {len(ip_addresses)} IP addresses for data.dynamical.org: {' '.join(ip_addresses)}"
+        f"DNS lookup: Found {len(ip_addresses)} IP addresses for data.dynamical.org: {' '.join(ip_addresses)}"
     )
 else:
-    logger.error("No IP addresses found for data.dynamical.org")
+    logger.error("DNS lookup: No IP addresses found for data.dynamical.org")
     exit(1)
 
 
