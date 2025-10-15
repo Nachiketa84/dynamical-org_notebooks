@@ -22,7 +22,7 @@ else:
     )
     exit(1)
 
-min_zarr_version = "3.0.4"
+min_zarr_version = "3.0.8"
 if Version(zarr.__version__) >= Version(min_zarr_version):
     logger.info(f"Using zarr version {zarr.__version__}")
 else:
