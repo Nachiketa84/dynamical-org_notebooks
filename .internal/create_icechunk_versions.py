@@ -19,6 +19,10 @@ NOTEBOOKS = [
         "icechunk_s3_uri": "s3://dynamical-noaa-gfs/noaa-gfs-forecast/v0.2.7.icechunk/",
     },
     {
+        "name": "noaa-gfs-analysis.ipynb",
+        "icechunk_s3_uri": "s3://dynamical-noaa-gfs/noaa-gfs-analysis/v0.1.0.icechunk/",
+    },
+    {
         "name": "noaa-hrrr-forecast-48-hour.ipynb",
         "icechunk_s3_uri": "s3://dynamical-noaa-hrrr/noaa-hrrr-forecast-48-hour/v0.1.0.icechunk/",
     },
@@ -126,7 +130,24 @@ def process_notebook(notebook_path, bucket, path):
 def main():
     """Main function to process all notebooks."""
     # Get the directory containing this script
-    script_dir = Path(__file__).parent.parent
+    root_dir = Path(__file__).parent.parent
+
+    # Check that all *.ipynb files in the root directory have an entry in NOTEBOOKS
+    allowed_missing = {"noaa-stations+gefs.ipynb"}
+    all_notebooks = set(
+        p.name
+        for p in root_dir.glob("*.ipynb")
+        if not p.name.endswith("-icechunk.ipynb") and p.name not in allowed_missing
+    )
+    registered_notebooks = set(nb["name"] for nb in NOTEBOOKS)
+    missing_notebooks = all_notebooks - registered_notebooks
+
+    if missing_notebooks:
+        print("Error: The following notebooks are missing from the NOTEBOOKS constant:")
+        for notebook in sorted(missing_notebooks):
+            print(f"  - {notebook}")
+        print("\nPlease add entries for these notebooks to the NOTEBOOKS constant.")
+        exit(1)
 
     for notebook_info in NOTEBOOKS:
         notebook_name = notebook_info["name"]
@@ -136,13 +157,11 @@ def main():
         bucket, path = parse_s3_uri(s3_uri)
 
         # Construct paths
-        notebook_path = script_dir / notebook_name
+        notebook_path = root_dir / notebook_name
         output_name = notebook_name.replace(".ipynb", "-icechunk.ipynb")
-        output_path = script_dir / output_name
+        output_path = root_dir / output_name
 
-        if not notebook_path.exists():
-            print(f"Warning: Notebook {notebook_name} not found, skipping...")
-            continue
+        assert notebook_path.exists()
 
         print(f"Processing {notebook_name}...")
 
