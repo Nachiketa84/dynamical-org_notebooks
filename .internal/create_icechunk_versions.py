@@ -28,7 +28,7 @@ NOTEBOOKS = [
     },
     {
         "name": "noaa-hrrr-analysis.ipynb",
-        "icechunk_s3_uri": "s3://dynamical-noaa-hrrr/noaa-hrrr-analysis/v0.1.0.icechunk/",
+        "icechunk_s3_uri": "s3://dynamical-noaa-hrrr/noaa-hrrr-analysis/v0.2.0.icechunk/",
     },
     {
         "name": "noaa-mrms-conus-analysis-hourly.ipynb",
