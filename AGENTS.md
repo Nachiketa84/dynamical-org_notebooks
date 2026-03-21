@@ -42,4 +42,4 @@ When adding a new notebook, first register it in the `NOTEBOOKS` constant at the
 
 ## Before committing
 
-Always run `uv run .internal/run_notebooks.py` on any notebooks you changed before committing.
+Always run `uv run .internal/run_notebooks.py` on any notebooks you changed before committing. Keep notebooks < 10MB.

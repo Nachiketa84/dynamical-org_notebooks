@@ -63,7 +63,11 @@ def run_notebook(notebook_path: Path) -> None:
             nb.cells[i].execution_count = None
 
     nbformat.write(nb, notebook_path)
-    print(f"  Saved {notebook_path.name}")
+
+    size_mb = notebook_path.stat().st_size / (1024 * 1024)
+    print(f"  Saved {notebook_path.name} ({size_mb:.1f} MB)")
+    if size_mb > 10:
+        print(f"  ⚠ WARNING: {notebook_path.name} is too large ({size_mb:.1f} MB). Reduce notebook size.")
 
 
 def main():
